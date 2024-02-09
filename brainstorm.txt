@@ -1,0 +1,20 @@
+Sure, you can create a function to calculate the monthly repayment and total repayment based on the loan amount, number of months, and interest rate. Here's how you can do it:
+
+Create a function calculateRepayment that takes three parameters: loanAmount, months, and interestRate.
+Calculate the monthly interest rate by dividing the annual interest rate by 12 and by 100 to convert it to a decimal.
+Calculate the monthly repayment using the formula for an amortizing loan payment: P = [r*PV] / [1 - (1 + r)^-n] where P is the monthly payment, r is the monthly interest rate, PV is the present value or loan amount, and n is the number of periods or months.
+Calculate the total repayment by multiplying the monthly repayment by the number of months.
+Here's the TypeScript code for the function:
+
+function calculateRepayment(loanAmount: number, months: number, interestRate: number) {
+  const monthlyInterestRate = interestRate / 12 / 100;
+  const monthlyRepayment = (monthlyInterestRate * loanAmount) / (1 - Math.pow(1 + monthlyInterestRate, -months));
+  const totalRepayment = monthlyRepayment * months;
+
+  return {
+    monthlyRepayment,
+    totalRepayment
+  };
+}
+
+You can then use this function in your component to display the monthly repayment and total repayment to the user.

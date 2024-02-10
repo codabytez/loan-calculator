@@ -138,7 +138,7 @@ const LoanRepayment: FC<LoanRepaymentProps> = ({
         </VStack>
       </Stack>
       <Button
-        w={{ base: "332px", sm: "70%", xl: "600px" }}
+        w={"332px"}
         p={"29px"}
         border={"1px solid green"}
         justifyContent={"center"}

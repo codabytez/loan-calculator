@@ -1,12 +1,11 @@
 export function useCalculateMonthlyPayment() {
   return (loanAmount: number, loanDuration: number, interestRate: number) => {
-    const monthlyInterestRate =
-      (loanAmount * interestRate * loanDuration) / 100;
+    const monthlyInterest = (loanAmount * interestRate * loanDuration) / 100;
 
-    const totalRepayment = monthlyInterestRate + loanAmount;
+    const totalRepayment = monthlyInterest + loanAmount;
     const monthlyPayment = totalRepayment / loanDuration;
-    return { monthlyPayment, totalRepayment, monthlyInterestRate };
+    return { monthlyPayment, totalRepayment, monthlyInterest };
   };
 }
 
-// NOTE: totalRepayment = loanAmount × (1 + monthlyInterestRate) ^ loanDuration
+// NOTE: totalRepayment = loanAmount × (1 + monthlyInterest) ^ loanDuration

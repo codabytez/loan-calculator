@@ -1,9 +1,6 @@
 import { Heading, Stack, VStack } from "@chakra-ui/react";
 import InputLoanDetails from "./inputLoanDetails";
-import {
-  useCalculateMonthlyPayment,
-  // useCalculatePaymentTwo,
-} from "../hooks/useCalculateLoanRepayment";
+import { useCalculateMonthlyPayment } from "../hooks/useCalculateLoanRepayment";
 
 import "../index.css";
 import LoanRepayment from "./loanRepayment/LoanRepayment";
@@ -11,22 +8,18 @@ import { useState } from "react";
 
 function App() {
   const calculateMonthlyPayment = useCalculateMonthlyPayment();
-  // const calculatePaymentTwo = useCalculatePaymentTwo();
   const [loanAmount, setLoanAmount] = useState(10000);
   const [loanDuration, setLoanDuration] = useState(1);
   const interestRate = 12.4;
 
-  const { monthlyPayment, totalRepayment, monthlyInterestRate } =
+  const { monthlyPayment, totalRepayment, monthlyInterest } =
     calculateMonthlyPayment(loanAmount, loanDuration, interestRate);
-
-  // const { monthlyPayment, totalRepayment, monthlyInterestRate } =
-  // calculatePaymentTwo(loanAmount, loanDuration, interestRate);
 
   console.log({
     monthlyPayment,
     totalRepayment,
     loanDuration,
-    monthlyInterestRate,
+    monthlyInterest,
   });
 
   return (

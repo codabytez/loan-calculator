@@ -9,6 +9,8 @@ interface InputLoanDetailsProps {
   setLoanAmount: (value: number) => void;
   loanDuration: number;
   setLoanDuration: (value: number) => void;
+  interest: number;
+  setInterest: (value: number) => void;
 }
 
 const InputLoanDetails: FC<InputLoanDetailsProps> = ({
@@ -16,6 +18,8 @@ const InputLoanDetails: FC<InputLoanDetailsProps> = ({
   setLoanAmount,
   loanDuration,
   setLoanDuration,
+  interest,
+  setInterest,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showDurationTooltip, setShowDurationTooltip] = useState(false);
@@ -29,10 +33,20 @@ const InputLoanDetails: FC<InputLoanDetailsProps> = ({
     setLoanDuration(value);
   };
 
-  //   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     const value = Number(event.target.value);
-  //     setLoanAmount(value < 10000 ? 10000 : value > 10000000 ? 10000000 : value);
-  //   };
+  const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (value >= 10000 && value <= 10000000) {
+      setLoanAmount(value);
+      handleSliderChange(value);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onBlur(e as unknown as React.ChangeEvent<HTMLInputElement>);
+      (e.currentTarget as HTMLElement).blur();
+    }
+  };
 
   return (
     <VStack
@@ -46,6 +60,8 @@ const InputLoanDetails: FC<InputLoanDetailsProps> = ({
         handleSliderChange={handleSliderChange}
         showTooltip={showTooltip}
         setShowTooltip={setShowTooltip}
+        onBlur={onBlur}
+        handleKeyPress={handleKeyPress}
       />
 
       <InputLoanDuration
@@ -58,6 +74,8 @@ const InputLoanDetails: FC<InputLoanDetailsProps> = ({
       <InputLoanDepositMode
         selectPayment={selectPayment}
         setSelectPayment={setSelectPayment}
+        interest={interest}
+        setInterest={setInterest}
       />
     </VStack>
   );

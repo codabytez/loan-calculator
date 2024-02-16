@@ -1,9 +1,9 @@
-import { Button, Heading, Text, VStack, Stack } from "@chakra-ui/react";
+import { Button, Heading, Text, VStack, Stack, HStack } from "@chakra-ui/react";
 import { FC } from "react";
 
 interface LoanRepaymentProps {
   loanAmount: number;
-  monthlyPayment: number;
+  monthlyPayment: number[];
   loanDuration?: number;
   totalRepayment: number;
 }
@@ -21,7 +21,15 @@ const LoanRepayment: FC<LoanRepaymentProps> = ({
       flex={1}
       w={{ xl: "636px" }}
     >
-      <VStack w={"332px"} pb={4} gap={4} alignItems={"center"}>
+      <VStack
+        border={"1px solid gray"}
+        bg={"#F6F6F6"}
+        borderRadius={8}
+        w={"332px"}
+        py={4}
+        gap={4}
+        alignItems={"center"}
+      >
         <Heading
           fontSize={34}
           fontWeight={"bold"}
@@ -36,22 +44,37 @@ const LoanRepayment: FC<LoanRepaymentProps> = ({
           justifyContent={"center"}
           w={"max-content"}
           minW={"295px"}
-          h={"95px"}
+          minH={"95px"}
         >
-          <Heading
-            as={"h3"}
-            fontSize={43}
-            fontWeight={"bold"}
-            textAlign={"center"}
-            textTransform={"capitalize"}
-            color={"green"}
-          >
-            ₦{" "}
-            {new Intl.NumberFormat("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }).format(monthlyPayment)}
-          </Heading>
+          <VStack>
+            {monthlyPayment.map((payment, index) => (
+              <HStack key={index}>
+                <Text
+                  fontSize={17}
+                  fontWeight={"semibold"}
+                  textAlign={"center"}
+                  textTransform={"capitalize"}
+                >
+                  Month {index + 1}
+                </Text>
+                <Stack w={"8px"} h={"8px"} borderRadius={"50%"} bg={"green"} />
+                <Heading
+                  as={"h3"}
+                  fontSize={24}
+                  fontWeight={"bold"}
+                  textAlign={"center"}
+                  textTransform={"capitalize"}
+                >
+                  ₦{" "}
+                  {new Intl.NumberFormat("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(payment)}
+                </Heading>
+              </HStack>
+            ))}
+          </VStack>
+
           <Text
             fontSize={17}
             fontWeight={"semibold"}

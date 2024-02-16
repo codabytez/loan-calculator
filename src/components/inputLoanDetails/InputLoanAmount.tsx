@@ -8,6 +8,7 @@ import {
   HStack,
   SliderThumb,
   Heading,
+  Input,
 } from "@chakra-ui/react";
 import { FC } from "react";
 
@@ -16,6 +17,8 @@ interface InputLoanAmountProps {
   handleSliderChange: (value: number) => void;
   showTooltip: boolean;
   setShowTooltip: (value: boolean) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const InputLoanAmount: FC<InputLoanAmountProps> = ({
@@ -23,6 +26,8 @@ const InputLoanAmount: FC<InputLoanAmountProps> = ({
   handleSliderChange,
   showTooltip,
   setShowTooltip,
+  onBlur,
+  handleKeyPress,
 }) => {
   return (
     <VStack
@@ -32,6 +37,7 @@ const InputLoanAmount: FC<InputLoanAmountProps> = ({
       justifyContent={"center"}
       alignItems={"flex-start"}
       gap={4}
+      mt={10}
     >
       <Text
         color={"label-color"}
@@ -41,15 +47,16 @@ const InputLoanAmount: FC<InputLoanAmountProps> = ({
       >
         loan amount
       </Text>
-      {/* <Input
-    border={"1px solid #E0E0E0"}
-    value={loanAmount}
-    onChange={handleInputChange}
-    type="number"
-    min={10000}
-    max={10000000}
-    step={10000}
-  /> */}
+      <Input
+        border={"1px solid #E0E0E0"}
+        type="number"
+        min={10000}
+        max={10000000}
+        step={10000}
+        minH={"40px"}
+        onBlur={onBlur}
+        onKeyDown={handleKeyPress}
+      />
       <Slider
         id="slider"
         aria-label="slider-ex-1"

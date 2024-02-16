@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   VStack,
   Text,
@@ -12,12 +12,29 @@ import {
 interface InputLoanDepositModeProps {
   selectPayment: string;
   setSelectPayment: (value: string) => void;
+  interest: number;
+  setInterest: (value: number) => void;
 }
 
 const InputLoanDepositMode: FC<InputLoanDepositModeProps> = ({
   selectPayment,
   setSelectPayment,
+  interest,
+  setInterest,
 }) => {
+  const [tempInterest, setTempInterest] = useState(interest);
+
+  const handleBlur = () => {
+    setInterest(Number(tempInterest));
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      setInterest(Number(tempInterest));
+      (event.currentTarget as HTMLElement).blur();
+    }
+  };
+
   return (
     <VStack
       h={"238px"}
@@ -55,7 +72,7 @@ const InputLoanDepositMode: FC<InputLoanDepositModeProps> = ({
               fontWeight={"semibold"}
               textTransform={"capitalize"}
             >
-              APR %
+              Monthly Rate %
             </Text>
             <Text
               color={"green"}
@@ -63,7 +80,7 @@ const InputLoanDepositMode: FC<InputLoanDepositModeProps> = ({
               fontWeight={"semibold"}
               textTransform={"capitalize"}
             >
-              deposit date
+              Input interest Rate
             </Text>
           </HStack>
           <svg
@@ -88,14 +105,17 @@ const InputLoanDepositMode: FC<InputLoanDepositModeProps> = ({
             fontWeight={"semibold"}
             textTransform={"capitalize"}
           >
-            12.4%
+            {interest && interest + " " + "%"}
           </Text>
           <Input
-            className="input-date"
             border={"1px solid #E0E0E0"}
-            w={"195px"}
+            w={"100px"}
             h={"53px"}
-            type={"date"}
+            type={"text"}
+            value={tempInterest}
+            onChange={(e) => setTempInterest(Number(e.target.value))}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyPress}
           />
         </HStack>
       </VStack>
